@@ -6,7 +6,8 @@ public class TransactionWithCurrency {
     private String currency;
     private Double mount;
 
-    public TransactionWithCurrency() { }
+    public TransactionWithCurrency() {
+    }
 
     public TransactionWithCurrency(String transmitter, String receiver, String currency, Double mount) {
         this.transmitter = transmitter;

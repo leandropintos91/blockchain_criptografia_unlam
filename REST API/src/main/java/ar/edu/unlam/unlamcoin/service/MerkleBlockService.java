@@ -5,7 +5,7 @@ import ar.edu.unlam.unlamcoin.repository.MerkleBlockRepository;
 import ar.edu.unlam.unlamcoin.structure.Hasher;
 import ar.edu.unlam.unlamcoin.structure.MerkleBlock;
 import ar.edu.unlam.unlamcoin.structure.MerkleTree;
-import ar.edu.unlam.unlamcoin.transactions.HasheableTransaction;
+import ar.edu.unlam.unlamcoin.transactions.HashableTransaction;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.springframework.stereotype.Service;
 
@@ -18,43 +18,43 @@ public class MerkleBlockService implements IMerkleBlockService {
 
 
     @Override
-    public List<MerkleBlock<HasheableTransaction>> getAll() throws IOException {
+    public List<MerkleBlock<HashableTransaction>> getAll() throws IOException {
         return MerkleBlockRepository.getAll();
     }
 
     @Override
-    public MerkleBlock<HasheableTransaction> getByHash(String hash) throws IOException {
+    public MerkleBlock<HashableTransaction> getByHash(String hash) throws IOException {
         return MerkleBlockRepository.getBlock(hash);
     }
 
     @Override
-    public List<HasheableTransaction> getPendingTransactions() throws IOException {
+    public List<HashableTransaction> getPendingTransactions() throws IOException {
         return MerkleBlockRepository.getPendingTransactions();
     }
 
     @Override
-    public void save(MerkleBlock<HasheableTransaction> block) throws IOException {
+    public void save(MerkleBlock<HashableTransaction> block) throws IOException {
         //MerkleBlockRepository.save(block);
     }
 
     @Override
-    public boolean save(HasheableTransaction transaction) throws IOException {
+    public boolean save(HashableTransaction transaction) throws IOException {
 
         //Calculamos el hash de la transacci�n
         transaction.recalculateTimeStampAndHash();
 
         //Obtenemos las transacciones pendientes
-        List<HasheableTransaction> pendingTransactions = MerkleBlockRepository.getPendingTransactions();
+        List<HashableTransaction> pendingTransactions = MerkleBlockRepository.getPendingTransactions();
 
-        if(pendingTransactions == null)
-            pendingTransactions = new ArrayList<HasheableTransaction>();
+        if (pendingTransactions == null)
+            pendingTransactions = new ArrayList<HashableTransaction>();
 
         pendingTransactions.add(transaction);
 
         //Si llegamos a la cantidad necesaria para armar un bloque, lo armamos
-        if(pendingTransactions.size() == MerkleTree.TRANSACTION_LIMIT) {
+        if (pendingTransactions.size() == MerkleTree.TRANSACTION_LIMIT) {
 
-            List<MerkleBlock<HasheableTransaction>> merkleBlockChain = null;
+            List<MerkleBlock<HashableTransaction>> merkleBlockChain = null;
 
             try {
                 merkleBlockChain = getAll();
@@ -63,18 +63,18 @@ public class MerkleBlockService implements IMerkleBlockService {
                 System.out.println("[MerkleBlockService] - Blockchain Merkle vacia");
             }
 
-            MerkleBlock<HasheableTransaction> newBlock;
+            MerkleBlock<HashableTransaction> newBlock;
 
-            if(merkleBlockChain.size() > 0) {
+            if (merkleBlockChain.size() > 0) {
                 MerkleBlock<?> lastBlock = merkleBlockChain.get(merkleBlockChain.size() - 1);
-                newBlock = new MerkleBlock<HasheableTransaction>(lastBlock.obtainHash(), pendingTransactions);
+                newBlock = new MerkleBlock<HashableTransaction>(lastBlock.getHash(), pendingTransactions);
             } else {
-                newBlock = new MerkleBlock<HasheableTransaction>(BlockRepository.GENESIS_HASH, pendingTransactions);
+                newBlock = new MerkleBlock<HashableTransaction>(BlockRepository.GENESIS_HASH, pendingTransactions);
                 merkleBlockChain = new ArrayList<>();
             }
 
             //Validamos la cadena antes de guardar
-            if(Hasher.isValidMerkleChain(merkleBlockChain)) {
+            if (Hasher.isValidMerkleChain(merkleBlockChain)) {
                 merkleBlockChain.add(newBlock);
                 MerkleBlockRepository.save(merkleBlockChain);
 

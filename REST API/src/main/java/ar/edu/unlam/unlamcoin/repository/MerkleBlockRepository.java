@@ -1,7 +1,7 @@
 package ar.edu.unlam.unlamcoin.repository;
 
 import ar.edu.unlam.unlamcoin.structure.MerkleBlock;
-import ar.edu.unlam.unlamcoin.transactions.HasheableTransaction;
+import ar.edu.unlam.unlamcoin.transactions.HashableTransaction;
 import ar.edu.unlam.unlamcoin.utils.FileUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,26 +15,27 @@ public class MerkleBlockRepository {
     private static final String PENDING_TRANSACTIONS_FILENAME = "/pendingTransactions.json";
     private static final String LOGGER_HEADER = "[MerkleBlockRepository] - ";
 
-    public static MerkleBlock<HasheableTransaction> getBlock(String hash) throws IOException {
+    public static MerkleBlock<HashableTransaction> getBlock(String hash) throws IOException {
 
-        List<MerkleBlock<HasheableTransaction>> allBlocks = getAll();
+        List<MerkleBlock<HashableTransaction>> allBlocks = getAll();
 
-        for(MerkleBlock<HasheableTransaction> block : allBlocks){
-            if(block.obtainHash().equals(hash))
+        for (MerkleBlock<HashableTransaction> block : allBlocks) {
+            if (block.getHash().equals(hash))
                 return block;
         }
 
         return null;
     }
 
-    public static List<MerkleBlock<HasheableTransaction>> getAll() throws IOException {
+    public static List<MerkleBlock<HashableTransaction>> getAll() throws IOException {
         FileUtils.checkFile(FILENAME);
         ObjectMapper mapper = new ObjectMapper();
-        TypeReference<List<MerkleBlock<HasheableTransaction>>> typeReference = new TypeReference<List<MerkleBlock<HasheableTransaction>>>() {};
-        List<MerkleBlock<HasheableTransaction>> merkleBlockList = new ArrayList<>();
+        TypeReference<List<MerkleBlock<HashableTransaction>>> typeReference = new TypeReference<List<MerkleBlock<HashableTransaction>>>() {
+        };
+        List<MerkleBlock<HashableTransaction>> merkleBlockList = new ArrayList<>();
         try {
             InputStream is = new FileInputStream(FileUtils.getFile(FILENAME));
-            merkleBlockList = mapper.readValue(is,typeReference);
+            merkleBlockList = mapper.readValue(is, typeReference);
 
         } catch (IOException e) {
             System.out.println(LOGGER_HEADER + "La cadena merkle esta vacia.");
@@ -43,7 +44,7 @@ public class MerkleBlockRepository {
         return merkleBlockList;
     }
 
-    public static void save(List<MerkleBlock<HasheableTransaction>> blockChain) throws IOException {
+    public static void save(List<MerkleBlock<HashableTransaction>> blockChain) throws IOException {
         FileUtils.checkFile(FILENAME);
         ObjectMapper mapper = new ObjectMapper();
         BufferedWriter out;
@@ -53,14 +54,15 @@ public class MerkleBlockRepository {
         out.close();
     }
 
-    public static List<HasheableTransaction> getPendingTransactions() throws IOException {
+    public static List<HashableTransaction> getPendingTransactions() throws IOException {
         FileUtils.checkFile(PENDING_TRANSACTIONS_FILENAME);
         ObjectMapper mapper = new ObjectMapper();
-        TypeReference<List<HasheableTransaction>> typeReference = new TypeReference<List<HasheableTransaction>>() {};
+        TypeReference<List<HashableTransaction>> typeReference = new TypeReference<List<HashableTransaction>>() {
+        };
 
         try {
             InputStream is = new FileInputStream(FileUtils.getFile(PENDING_TRANSACTIONS_FILENAME));
-            List<HasheableTransaction> pendingTransactionsList = mapper.readValue(is,typeReference);
+            List<HashableTransaction> pendingTransactionsList = mapper.readValue(is, typeReference);
             return pendingTransactionsList;
         } catch (IOException e) {
             System.out.println(LOGGER_HEADER + "No hay transacciones pendientes.");
@@ -69,7 +71,7 @@ public class MerkleBlockRepository {
         return null;
     }
 
-    public static void savePendingTransactions(List<HasheableTransaction> pendingTransactions) throws IOException {
+    public static void savePendingTransactions(List<HashableTransaction> pendingTransactions) throws IOException {
         FileUtils.checkFile(PENDING_TRANSACTIONS_FILENAME);
         ObjectMapper mapper = new ObjectMapper();
         BufferedWriter out;
@@ -86,12 +88,12 @@ public class MerkleBlockRepository {
         BufferedWriter out;
 
         try {
-            List<MerkleBlock<HasheableTransaction>> b = getAll();
+            List<MerkleBlock<HashableTransaction>> b = getAll();
             b.clear();
             out = new BufferedWriter(FileUtils.getFileWriter(FILENAME));
             mapper.writeValue(out, b);
             out.close();
-            List<HasheableTransaction> pendT = getPendingTransactions();
+            List<HashableTransaction> pendT = getPendingTransactions();
             pendT.clear();
             out = new BufferedWriter(FileUtils.getFileWriter(PENDING_TRANSACTIONS_FILENAME));
             mapper.writeValue(out, pendT);

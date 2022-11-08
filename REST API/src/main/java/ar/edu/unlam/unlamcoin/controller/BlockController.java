@@ -33,7 +33,7 @@ public class BlockController {
     public ResponseEntity save(@RequestBody Transaction t) throws IOException {
         Block<Transaction> block = new Block<>();
         block.setData(t);
-        if(blockService.save(block))
+        if (blockService.save(block))
             return new ResponseEntity<>(block, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

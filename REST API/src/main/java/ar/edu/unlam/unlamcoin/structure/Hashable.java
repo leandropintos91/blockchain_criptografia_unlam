@@ -1,7 +1,8 @@
 package ar.edu.unlam.unlamcoin.structure;
 
-public interface Hasheable {
+public interface Hashable {
 
-    public String obtainHash();
+    public String getHash();
+
     public String recalculateHash();
 }

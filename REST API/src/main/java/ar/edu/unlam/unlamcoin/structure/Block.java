@@ -9,12 +9,12 @@ public class Block<T> {
 
     private T data;
 
-    public Block(){
+    public Block() {
         Date today = new Date();
         this.timeStamp = today.getTime();
     }
 
-    public Block(final String prevHash, final T data){
+    public Block(final String prevHash, final T data) {
         this.prevHash = prevHash;
         this.data = data;
         Date today = new Date();

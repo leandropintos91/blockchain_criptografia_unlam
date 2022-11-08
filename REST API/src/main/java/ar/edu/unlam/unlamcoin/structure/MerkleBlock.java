@@ -2,28 +2,29 @@ package ar.edu.unlam.unlamcoin.structure;
 
 import java.util.List;
 
-public class MerkleBlock<T extends Hasheable> implements Hasheable {
+public class MerkleBlock<T extends Hashable> implements Hashable {
 
     private String prevHash;
     private MerkleTree<T> merkleTree;
 
-    public MerkleBlock() {}
+    public MerkleBlock() {
+    }
 
-    public MerkleBlock(String prevHash, List<T> data){
+    public MerkleBlock(String prevHash, List<T> data) {
         this.prevHash = prevHash;
         this.merkleTree = new MerkleTree<T>(data);
     }
 
     @Override
-    public String obtainHash() {
-        return merkleTree.obtainHash();
+    public String getHash() {
+        return merkleTree.getHash();
     }
 
     @Override
     public String recalculateHash() {
         return merkleTree.recalculateHash();
     }
-    
+
     public void setPrevHash(final String prevHash) {
         this.prevHash = prevHash;
     }
@@ -36,7 +37,7 @@ public class MerkleBlock<T extends Hasheable> implements Hasheable {
         return merkleTree;
     }
 
-	public void setMerkleTree(MerkleTree<T> merkleTree) {
-		this.merkleTree = merkleTree;
-	}
+    public void setMerkleTree(MerkleTree<T> merkleTree) {
+        this.merkleTree = merkleTree;
+    }
 }

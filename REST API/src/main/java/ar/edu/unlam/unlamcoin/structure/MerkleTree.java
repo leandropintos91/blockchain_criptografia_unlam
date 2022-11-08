@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MerkleTree<T extends Hasheable> implements Hasheable {
+public class MerkleTree<T extends Hashable> implements Hashable {
     public static final int TRANSACTION_LIMIT = 4;
     public static final int HASH_POSITION_A = 0;
     public static final int HASH_POSITION_B = 1;
@@ -17,16 +17,17 @@ public class MerkleTree<T extends Hasheable> implements Hasheable {
 
     private List<String> tree;
     private List<T> dataList;
-    
-    public MerkleTree() {}
+
+    public MerkleTree() {
+    }
 
     public MerkleTree(List<T> dataList) {
         this.dataList = dataList;
         this.tree = new ArrayList<>();
 
         //Cargamos las 4 transacciones necesarias
-        for(T t : dataList)
-            tree.add(t.obtainHash());
+        for (T t : dataList)
+            tree.add(t.getHash());
 
         //Calculamos los nodos intermedios
         tree.add(Hasher.hashSHA256Hex(tree.get(HASH_POSITION_A) + tree.get(HASH_POSITION_B)));
@@ -36,8 +37,8 @@ public class MerkleTree<T extends Hasheable> implements Hasheable {
         tree.add(Hasher.hashSHA256Hex(tree.get(HASH_POSITION_AB) + tree.get(HASH_POSITION_CD)));
     }
 
-	@Override
-    public String obtainHash() {
+    @Override
+    public String getHash() {
         return tree.get(HASH_POSITION_ABCD);
     }
 
@@ -45,6 +46,7 @@ public class MerkleTree<T extends Hasheable> implements Hasheable {
      * Recalcula el root del MerkleTree
      * Si el hash del root no se modifica significa que el árbol
      * no fue modificado en ninguno de sus nodos
+     *
      * @return el hash del root recalculado
      */
     @Override
@@ -58,28 +60,28 @@ public class MerkleTree<T extends Hasheable> implements Hasheable {
             String currHash = b.recalculateHash();
             hashAcumWX += currHash;
 
-            if(i%2 != 0){
+            if (i % 2 != 0) {
                 hashAcumWX = Hasher.hashSHA256Hex(hashAcumWX);
                 hashAcumWXYZ += hashAcumWX;
                 hashAcumWX = "";
             }
         }
-        return  Hasher.hashSHA256Hex(hashAcumWXYZ);
+        return Hasher.hashSHA256Hex(hashAcumWXYZ);
     }
 
     public List<T> getDataList() {
         return dataList;
     }
 
-	public List<String> getTree() {
-		return tree;
-	}
+    public List<String> getTree() {
+        return tree;
+    }
 
-	public void setTree(List<String> tree) {
-		this.tree = tree;
-	}
+    public void setTree(List<String> tree) {
+        this.tree = tree;
+    }
 
-	public void setDataList(List<T> dataList) {
-		this.dataList = dataList;
-	}
+    public void setDataList(List<T> dataList) {
+        this.dataList = dataList;
+    }
 }

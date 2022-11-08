@@ -16,8 +16,8 @@ public class BlockRepository<T> {
 
     public static Block<?> getByHash(String hash) throws UnsupportedEncodingException {
         List<Block<?>> blocks = getAll();
-        for(Block<?> block : blocks){
-            if(block.getHash().equals(hash))
+        for (Block<?> block : blocks) {
+            if (block.getHash().equals(hash))
                 return block;
         }
 
@@ -27,11 +27,12 @@ public class BlockRepository<T> {
     public static List<Block<?>> getAll() throws UnsupportedEncodingException {
         FileUtils.checkFile(FILENAME);
         ObjectMapper mapper = new ObjectMapper();
-        TypeReference<List<Block<?>>> typeReference = new TypeReference<List<Block<?>>>(){};
+        TypeReference<List<Block<?>>> typeReference = new TypeReference<List<Block<?>>>() {
+        };
         List<Block<?>> b = new ArrayList<>();
         try {
             InputStream is = new FileInputStream(FileUtils.getFile(FILENAME));
-            b = mapper.readValue(is,typeReference);
+            b = mapper.readValue(is, typeReference);
         } catch (IOException e1) {
             e1.printStackTrace();
         }

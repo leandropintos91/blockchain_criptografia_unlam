@@ -14,41 +14,46 @@ import java.util.List;
 @SpringBootTest
 public class TransactionMerkleBlockChainTest {
 
-    private List<MerkleBlock<HasheableTransaction>> merkleBlockChain;
+    private List<MerkleBlock<HashableTransaction>> merkleBlockChain;
 
     @BeforeEach
-    public void init(){
-        List<HasheableTransaction> transactions = new ArrayList<>();
+    public void init() {
+        List<HashableTransaction> transactions = List.of(
+                HashableTransaction.builder().sender("Leandro").receiver("Santiago").amount(300.00).build(),
+                HashableTransaction.builder().sender("Santiago").receiver("Leandro").amount(300.00).build(),
+                HashableTransaction.builder().sender("Leandro").receiver("Carolina").amount(300.00).build(),
+                HashableTransaction.builder().sender("Carolina").receiver("Agustín").amount(300.00).build()
+        );
         merkleBlockChain = new ArrayList<>();
-        transactions.add(new HasheableTransaction("Messi", "Maradona", 300D));
-        transactions.add(new HasheableTransaction("Maradona", "Messi", 300D));
-        transactions.add(new HasheableTransaction("Messi", "Pelé", 300D));
-        transactions.add(new HasheableTransaction("Pelé", "Ronaldinho", 300D));
-        merkleBlockChain.add(new MerkleBlock<HasheableTransaction>("0", transactions));
-        transactions = new ArrayList<>();
-        transactions.add(new HasheableTransaction("Maradona", "Messi", 300D));
-        transactions.add(new HasheableTransaction("Pelé", "Ronaldinho", 300D));
-        transactions.add(new HasheableTransaction("Messi", "Maradona", 300D));
-        transactions.add(new HasheableTransaction("Pelé", "Ronaldinho", 300D));
-        merkleBlockChain.add(new MerkleBlock<HasheableTransaction>(merkleBlockChain.get(merkleBlockChain.size() - 1).obtainHash(), transactions));
-        transactions = new ArrayList<>();
-        transactions.add(new HasheableTransaction("Agüero", "Pelé", 300D));
-        transactions.add(new HasheableTransaction("Maradona", "Ronaldinho", 300D));
-        transactions.add(new HasheableTransaction("Messi", "Maradona", 300D));
-        transactions.add(new HasheableTransaction("Pelé", "Agüero", 300D));
-        merkleBlockChain.add(new MerkleBlock<HasheableTransaction>(merkleBlockChain.get(merkleBlockChain.size() - 1).obtainHash(), transactions));
+        merkleBlockChain.add(new MerkleBlock<>("0", transactions));
+
+        transactions = List.of(
+                HashableTransaction.builder().sender("Santiago").receiver("Leandro").amount(300.00).build(),
+                HashableTransaction.builder().sender("Carolina").receiver("Agustín").amount(300.00).build(),
+                HashableTransaction.builder().sender("Leandro").receiver("Santiago").amount(300.00).build(),
+                HashableTransaction.builder().sender("Carolina").receiver("Agustín").amount(300.00).build()
+        );
+        merkleBlockChain.add(new MerkleBlock<>(merkleBlockChain.get(merkleBlockChain.size() - 1).getHash(), transactions));
+
+        transactions = List.of(
+                HashableTransaction.builder().sender("Cristian").receiver("Carolina").amount(300.00).build(),
+                HashableTransaction.builder().sender("Santiago").receiver("Agustín").amount(300.00).build(),
+                HashableTransaction.builder().sender("Leandro").receiver("Santiago").amount(300.00).build(),
+                HashableTransaction.builder().sender("Carolina").receiver("Cristian").amount(300.00).build()
+        );
+        merkleBlockChain.add(new MerkleBlock<>(merkleBlockChain.get(merkleBlockChain.size() - 1).getHash(), transactions));
     }
 
     @Test
-    public void testValidTransactionBlockChain(){
+    public void testValidTransactionBlockChain() {
         Assert.isTrue(Hasher.isValidMerkleChain(merkleBlockChain), "MerkleBlockChain invalida");
     }
 
     @Test
-    public void testInvalidTransactionBlockChain(){
-        MerkleBlock<HasheableTransaction> b3 = (MerkleBlock<HasheableTransaction>) merkleBlockChain.get(2);
-        MerkleTree<HasheableTransaction> b4 = b3.getMerkleTree();
-        List<HasheableTransaction> b5 = b4.getDataList();
+    public void testInvalidTransactionBlockChain() {
+        MerkleBlock<HashableTransaction> b3 = merkleBlockChain.get(2);
+        MerkleTree<HashableTransaction> b4 = b3.getMerkleTree();
+        List<HashableTransaction> b5 = b4.getDataList();
         b5.get(2).setReceiver("ROMPI TODO");
 
         Assert.isTrue(!Hasher.isValidMerkleChain(merkleBlockChain), "MerkleBlockChain valida");

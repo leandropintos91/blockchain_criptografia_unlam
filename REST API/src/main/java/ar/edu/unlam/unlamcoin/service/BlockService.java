@@ -27,7 +27,7 @@ public class BlockService<T> implements IBlockService<T> {
     public boolean save(Block<T> block) throws IOException {
         List<Block<?>> blockChain = getAll();
 
-        if(blockChain.size() > 0) {
+        if (blockChain.size() > 0) {
             Block<?> lastBlock = blockChain.get(blockChain.size() - 1);
             block.setPrevHash(lastBlock.getHash());
         } else {
@@ -35,7 +35,7 @@ public class BlockService<T> implements IBlockService<T> {
             blockChain = new ArrayList<>();
         }
 
-        if(Hasher.isValidChain(blockChain)) {
+        if (Hasher.isValidChain(blockChain)) {
             blockChain.add(block);
             BlockRepository.save(blockChain);
             return true;

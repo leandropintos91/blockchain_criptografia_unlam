@@ -16,7 +16,7 @@ public class TransactionWithCurrencyBlockChainTest {
     private List<Block<?>> blockChain;
 
     @BeforeEach
-    public void init(){
+    public void init() {
         blockChain = new ArrayList<>();
         blockChain.add(new Block<TransactionWithCurrency>("0", new TransactionWithCurrency("Messi", "Maradona", "USD", 300D)));
         blockChain.add(new Block<TransactionWithCurrency>(blockChain.get(blockChain.size() - 1).getHash(), new TransactionWithCurrency("Maradona", "Messi", "USD", 300D)));
@@ -27,14 +27,14 @@ public class TransactionWithCurrencyBlockChainTest {
     }
 
     @Test
-    public void testValidTransactionBlockChain(){
+    public void testValidTransactionBlockChain() {
         Assert.isTrue(Hasher.isValidChain(blockChain), "BlockChain invalida");
     }
 
     @Test
-    public void testInvalidTransactionBlockChain(){
+    public void testInvalidTransactionBlockChain() {
         Block<TransactionWithCurrency> interceptedBlock = (Block<TransactionWithCurrency>) blockChain.get(2);
-        interceptedBlock.setData(new TransactionWithCurrency("Maradona","Messi","ARS", 300D));
+        interceptedBlock.setData(new TransactionWithCurrency("Maradona", "Messi", "ARS", 300D));
 
         Assert.isTrue(!Hasher.isValidChain(blockChain), "BlockChain valida");
     }
