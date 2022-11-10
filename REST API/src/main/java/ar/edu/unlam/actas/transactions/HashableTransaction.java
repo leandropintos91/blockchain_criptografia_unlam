@@ -1,7 +1,7 @@
-package ar.edu.unlam.unlamcoin.transactions;
+package ar.edu.unlam.actas.transactions;
 
-import ar.edu.unlam.unlamcoin.structure.Hashable;
-import ar.edu.unlam.unlamcoin.structure.Hasher;
+import ar.edu.unlam.actas.model.Hashable;
+import ar.edu.unlam.actas.utils.HashUtils;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -30,7 +30,7 @@ public class HashableTransaction implements Hashable {
 
     @Override
     public String recalculateHash() {
-        return Hasher.hashSHA256Hex(sender + receiver + amount + timestamp);
+        return HashUtils.hash256(sender + receiver + amount + timestamp);
     }
 
     public void recalculateTimeStampAndHash() {

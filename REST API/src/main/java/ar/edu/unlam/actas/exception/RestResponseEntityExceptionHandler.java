@@ -1,4 +1,4 @@
-package ar.edu.unlam.unlamcoin.exception;
+package ar.edu.unlam.actas.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +28,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     public ResponseEntity invalidBlockchainExceptionHandler(InvalidBlockchainException ex) {
         String errorMessage = ex.getMessage();
         return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(BlockNotFoundException.class)
+    public ResponseEntity invalidBlockchainExceptionHandler(BlockNotFoundException ex) {
+        String errorMessage = ex.getMessage();
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 }

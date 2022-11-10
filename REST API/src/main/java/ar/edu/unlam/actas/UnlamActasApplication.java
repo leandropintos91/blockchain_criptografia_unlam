@@ -1,13 +1,13 @@
-package ar.edu.unlam.unlamcoin;
+package ar.edu.unlam.actas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UnlamcoinApplication {
+public class UnlamActasApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UnlamcoinApplication.class, args);
+        SpringApplication.run(UnlamActasApplication.class, args);
     }
 
 }

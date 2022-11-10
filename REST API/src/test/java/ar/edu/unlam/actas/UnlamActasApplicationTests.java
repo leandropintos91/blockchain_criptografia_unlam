@@ -1,10 +1,10 @@
-package ar.edu.unlam.unlamcoin;
+package ar.edu.unlam.actas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UnlamcoinApplicationTests {
+class UnlamActasApplicationTests {
 
     @Test
     void contextLoads() {

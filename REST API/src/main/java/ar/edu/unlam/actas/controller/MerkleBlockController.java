@@ -1,8 +1,8 @@
-package ar.edu.unlam.unlamcoin.controller;
+package ar.edu.unlam.actas.controller;
 
-import ar.edu.unlam.unlamcoin.service.MerkleBlockService;
-import ar.edu.unlam.unlamcoin.structure.MerkleBlock;
-import ar.edu.unlam.unlamcoin.transactions.HashableTransaction;
+import ar.edu.unlam.actas.service.MerkleBlockService;
+import ar.edu.unlam.actas.model.merkletree.MerkleBlock;
+import ar.edu.unlam.actas.transactions.HashableTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

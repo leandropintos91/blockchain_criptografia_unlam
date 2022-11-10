@@ -1,4 +1,6 @@
-package ar.edu.unlam.unlamcoin.structure;
+package ar.edu.unlam.actas.model.merkletree;
+
+import ar.edu.unlam.actas.model.Hashable;
 
 import java.util.List;
 

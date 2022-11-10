@@ -1,13 +1,12 @@
-package ar.edu.unlam.unlamcoin.service;
+package ar.edu.unlam.actas.service;
 
-import ar.edu.unlam.unlamcoin.structure.Block;
-import ar.edu.unlam.unlamcoin.transactions.Transaction;
+import ar.edu.unlam.actas.model.linearblockchain.Block;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-public interface IBlockService<T> {
+public interface BlockchainService<T> {
 
     List<Block<T>> getAll() throws IOException;
 

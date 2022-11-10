@@ -1,7 +1,7 @@
-package ar.edu.unlam.unlamcoin.repository;
+package ar.edu.unlam.actas.repository;
 
-import ar.edu.unlam.unlamcoin.structure.Block;
-import ar.edu.unlam.unlamcoin.utils.FileUtils;
+import ar.edu.unlam.actas.model.linearblockchain.Block;
+import ar.edu.unlam.actas.utils.FileUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;

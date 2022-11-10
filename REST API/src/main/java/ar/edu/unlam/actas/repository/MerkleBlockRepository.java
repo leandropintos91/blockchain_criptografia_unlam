@@ -1,8 +1,8 @@
-package ar.edu.unlam.unlamcoin.repository;
+package ar.edu.unlam.actas.repository;
 
-import ar.edu.unlam.unlamcoin.structure.MerkleBlock;
-import ar.edu.unlam.unlamcoin.transactions.HashableTransaction;
-import ar.edu.unlam.unlamcoin.utils.FileUtils;
+import ar.edu.unlam.actas.model.merkletree.MerkleBlock;
+import ar.edu.unlam.actas.transactions.HashableTransaction;
+import ar.edu.unlam.actas.utils.FileUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

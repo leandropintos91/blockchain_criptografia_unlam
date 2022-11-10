@@ -1,11 +1,11 @@
-package ar.edu.unlam.unlamcoin.service;
+package ar.edu.unlam.actas.service;
 
-import ar.edu.unlam.unlamcoin.repository.BlockRepository;
-import ar.edu.unlam.unlamcoin.repository.MerkleBlockRepository;
-import ar.edu.unlam.unlamcoin.structure.Hasher;
-import ar.edu.unlam.unlamcoin.structure.MerkleBlock;
-import ar.edu.unlam.unlamcoin.structure.MerkleTree;
-import ar.edu.unlam.unlamcoin.transactions.HashableTransaction;
+import ar.edu.unlam.actas.repository.BlockRepository;
+import ar.edu.unlam.actas.repository.MerkleBlockRepository;
+import ar.edu.unlam.actas.utils.HashUtils;
+import ar.edu.unlam.actas.model.merkletree.MerkleBlock;
+import ar.edu.unlam.actas.model.merkletree.MerkleTree;
+import ar.edu.unlam.actas.transactions.HashableTransaction;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.springframework.stereotype.Service;
 
@@ -74,7 +74,7 @@ public class MerkleBlockService implements IMerkleBlockService {
             }
 
             //Validamos la cadena antes de guardar
-            if (Hasher.isValidMerkleChain(merkleBlockChain)) {
+            if (HashUtils.isValidMerkleChain(merkleBlockChain)) {
                 merkleBlockChain.add(newBlock);
                 MerkleBlockRepository.save(merkleBlockChain);
 

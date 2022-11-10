@@ -1,4 +1,7 @@
-package ar.edu.unlam.unlamcoin.structure;
+package ar.edu.unlam.actas.model.merkletree;
+
+import ar.edu.unlam.actas.utils.HashUtils;
+import ar.edu.unlam.actas.model.Hashable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +33,11 @@ public class MerkleTree<T extends Hashable> implements Hashable {
             tree.add(t.getHash());
 
         //Calculamos los nodos intermedios
-        tree.add(Hasher.hashSHA256Hex(tree.get(HASH_POSITION_A) + tree.get(HASH_POSITION_B)));
-        tree.add(Hasher.hashSHA256Hex(tree.get(HASH_POSITION_C) + tree.get(HASH_POSITION_D)));
+        tree.add(HashUtils.hash256(tree.get(HASH_POSITION_A) + tree.get(HASH_POSITION_B)));
+        tree.add(HashUtils.hash256(tree.get(HASH_POSITION_C) + tree.get(HASH_POSITION_D)));
 
         //Calculamos el nodo root del MerkleTree
-        tree.add(Hasher.hashSHA256Hex(tree.get(HASH_POSITION_AB) + tree.get(HASH_POSITION_CD)));
+        tree.add(HashUtils.hash256(tree.get(HASH_POSITION_AB) + tree.get(HASH_POSITION_CD)));
     }
 
     @Override
@@ -61,12 +64,12 @@ public class MerkleTree<T extends Hashable> implements Hashable {
             hashAcumWX += currHash;
 
             if (i % 2 != 0) {
-                hashAcumWX = Hasher.hashSHA256Hex(hashAcumWX);
+                hashAcumWX = HashUtils.hash256(hashAcumWX);
                 hashAcumWXYZ += hashAcumWX;
                 hashAcumWX = "";
             }
         }
-        return Hasher.hashSHA256Hex(hashAcumWXYZ);
+        return HashUtils.hash256(hashAcumWXYZ);
     }
 
     public List<T> getDataList() {

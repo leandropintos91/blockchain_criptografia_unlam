@@ -1,4 +1,4 @@
-package ar.edu.unlam.unlamcoin.utils;
+package ar.edu.unlam.actas.utils;
 
 import javax.swing.*;
 import java.io.File;

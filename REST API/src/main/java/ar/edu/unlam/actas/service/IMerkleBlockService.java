@@ -1,7 +1,7 @@
-package ar.edu.unlam.unlamcoin.service;
+package ar.edu.unlam.actas.service;
 
-import ar.edu.unlam.unlamcoin.structure.MerkleBlock;
-import ar.edu.unlam.unlamcoin.transactions.HashableTransaction;
+import ar.edu.unlam.actas.model.merkletree.MerkleBlock;
+import ar.edu.unlam.actas.transactions.HashableTransaction;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,9 +1,8 @@
-package ar.edu.unlam.unlamcoin.controller;
+package ar.edu.unlam.actas.controller;
 
-import ar.edu.unlam.unlamcoin.service.IBlockService;
-import ar.edu.unlam.unlamcoin.structure.Block;
-import ar.edu.unlam.unlamcoin.transactions.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
+import ar.edu.unlam.actas.model.linearblockchain.Block;
+import ar.edu.unlam.actas.service.BlockchainService;
+import ar.edu.unlam.actas.transactions.Acta;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -14,10 +13,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/blocks")
 @CrossOrigin(origins = "http://localhost:3000")
-public class BlockController {
+public class LinearBlockchainController {
 
-    @Autowired
-    private IBlockService<Transaction> blockService;
+    private BlockchainService<Acta> blockService;
+
+    public LinearBlockchainController(final BlockchainService<Acta> blockService) {
+        this.blockService = blockService;
+    }
 
     @GetMapping("{hash}")
     public Block get(@PathVariable("hash") String hash) throws UnsupportedEncodingException {
@@ -25,13 +27,13 @@ public class BlockController {
     }
 
     @GetMapping
-    public List<Block<Transaction>> getAll() throws IOException {
+    public List<Block<Acta>> getAll() throws IOException {
         return blockService.getAll();
     }
 
     @PostMapping("/transaction")
-    public void save(@RequestBody Transaction transaction) throws IOException {
-        blockService.saveNewBlock(transaction);
+    public void save(@RequestBody Acta acta) throws IOException {
+        blockService.saveNewBlock(acta);
     }
 
     @DeleteMapping
