@@ -1,19 +1,19 @@
 package ar.edu.unlam.actas.service;
 
 import ar.edu.unlam.actas.model.linearblockchain.Block;
+import ar.edu.unlam.actas.model.transactions.Acta;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-public interface BlockchainService<T> {
+public interface BlockchainService {
 
-    List<Block<T>> getAll() throws IOException;
+    List<Block> getAllBlocks() throws IOException;
 
-    Block<T> getByHash(String hash) throws UnsupportedEncodingException;
+    Block getBlockByHash(String hash) throws IOException;
 
 
-    void saveNewBlock(T transaction) throws IOException;
+    void saveNewBlock(Acta transaction) throws IOException;
 
-    void deleteAll() throws IOException;
+    void deleteBlockchain() throws IOException;
 }

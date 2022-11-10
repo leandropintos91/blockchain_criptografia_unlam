@@ -2,11 +2,10 @@ package ar.edu.unlam.actas.controller;
 
 import ar.edu.unlam.actas.model.linearblockchain.Block;
 import ar.edu.unlam.actas.service.BlockchainService;
-import ar.edu.unlam.actas.transactions.Acta;
+import ar.edu.unlam.actas.model.transactions.Acta;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @SuppressWarnings("ALL")
@@ -15,20 +14,20 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class LinearBlockchainController {
 
-    private BlockchainService<Acta> blockService;
+    private BlockchainService blockService;
 
-    public LinearBlockchainController(final BlockchainService<Acta> blockService) {
+    public LinearBlockchainController(final BlockchainService blockService) {
         this.blockService = blockService;
     }
 
     @GetMapping("{hash}")
-    public Block get(@PathVariable("hash") String hash) throws UnsupportedEncodingException {
-        return blockService.getByHash(hash);
+    public Block getByHash(@PathVariable("hash") String hash) throws IOException {
+        return blockService.getBlockByHash(hash);
     }
 
     @GetMapping
-    public List<Block<Acta>> getAll() throws IOException {
-        return blockService.getAll();
+    public List<Block> getAll() throws IOException {
+        return blockService.getAllBlocks();
     }
 
     @PostMapping("/transaction")
@@ -37,7 +36,7 @@ public class LinearBlockchainController {
     }
 
     @DeleteMapping
-    public void deleteAll() throws IOException {
-        blockService.deleteAll();
+    public void deleteBlockchain() throws IOException {
+        blockService.deleteBlockchain();
     }
 }

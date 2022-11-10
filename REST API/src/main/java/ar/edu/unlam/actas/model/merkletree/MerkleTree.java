@@ -1,7 +1,7 @@
 package ar.edu.unlam.actas.model.merkletree;
 
-import ar.edu.unlam.actas.utils.HashUtils;
 import ar.edu.unlam.actas.model.Hashable;
+import ar.edu.unlam.actas.utils.HashUtils;
 
 import java.util.ArrayList;
 import java.util.List;

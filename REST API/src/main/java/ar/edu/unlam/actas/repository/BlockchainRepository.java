@@ -2,23 +2,25 @@ package ar.edu.unlam.actas.repository;
 
 import ar.edu.unlam.actas.model.linearblockchain.Block;
 import ar.edu.unlam.actas.utils.FileUtils;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.GsonBuilder;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class BlockRepository<T> {
+public class BlockchainRepository {
 
-    private static final String FILENAME = "/blockChain.json";
-    public static final String GENESIS_HASH = "GenesisBlock";
+    private static final String FILENAME = "D:\\Blockchain\\blockChain.json";
 
-    public Block<T> getByHash(String hash) throws UnsupportedEncodingException {
-        List<Block<T>> blocks = getAll();
-        for (Block<T> block : blocks) {
+    public Block findByHash(String hash) throws IOException {
+        List<Block> blocks = findAll();
+        for (Block block : blocks) {
             if (block.getHash().equals(hash))
                 return block;
         }
@@ -26,50 +28,28 @@ public class BlockRepository<T> {
         return null;
     }
 
-    public List<Block<T>> getAll() throws UnsupportedEncodingException {
-        FileUtils.checkFile(FILENAME);
-        ObjectMapper mapper = new ObjectMapper();
-        TypeReference<List<Block<T>>> typeReference = new TypeReference<>() {
-        };
-        List<Block<T>> blockList = new ArrayList<>();
-        try {
-            InputStream is = new FileInputStream(FileUtils.getFile(FILENAME));
-            blockList = mapper.readValue(is, typeReference);
-        } catch (IOException e1) {
-            e1.printStackTrace();
+    public List<Block> findAll() throws IOException {
+        FileUtils.checkFileExists(FILENAME);
+        FileReader fileReader = new FileReader(FileUtils.getFile(FILENAME));
+        Type typeMyType = new TypeToken<List<Block>>() {
+        }.getType();
+        List<Block> blockchain = new GsonBuilder().serializeNulls().create().fromJson(fileReader, typeMyType);
+        fileReader.close();
+        if (blockchain != null) {
+            return blockchain;
         }
-
-        return blockList;
-
+        return new ArrayList<>();
     }
 
-    public void save(List<Block<T>> blockChain) throws UnsupportedEncodingException {
-        FileUtils.checkFile(FILENAME);
-        ObjectMapper mapper = new ObjectMapper();
-        BufferedWriter out;
-
-        try {
-            out = new BufferedWriter(FileUtils.getFileWriter(FILENAME));
-            mapper.writeValue(out, blockChain);
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void save(List<Block> blockChain) throws IOException {
+        FileUtils.checkFileExists(FILENAME);
+        String serializedBlockchain = new GsonBuilder().serializeNulls().create().toJson(blockChain);
+        FileWriter fileWriter = FileUtils.getFileWriter(FILENAME);
+        fileWriter.write(serializedBlockchain);
+        fileWriter.close();
     }
 
-    public void deleteAll() throws UnsupportedEncodingException {
-        FileUtils.checkFile(FILENAME);
-        ObjectMapper mapper = new ObjectMapper();
-        BufferedWriter out;
-
-        try {
-            List<Block<T>> b = getAll();
-            b.clear();
-            out = new BufferedWriter(FileUtils.getFileWriter(FILENAME));
-            mapper.writeValue(out, b);
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void deleteAll() throws IOException {
+        save(List.of());
     }
 }

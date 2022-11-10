@@ -1,5 +1,6 @@
 package ar.edu.unlam.actas.model.linearblockchain;
 
+import ar.edu.unlam.actas.model.transactions.Acta;
 import ar.edu.unlam.actas.utils.HashUtils;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,23 +12,23 @@ import java.util.Date;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Block<T> {
+public class Block {
     private String previousHash;
     private long timeStamp;
-    private T data;
+    private Acta data;
     private String hash;
 
 
     @Builder
-    public Block(final String previousHash, final T data) {
+    public Block(final String previousHash, final Acta data) {
         this.previousHash = previousHash;
         this.data = data;
         Date today = new Date();
         this.timeStamp = today.getTime();
-        this.hash = recalculateHash();
+        this.hash = calculateHash();
     }
 
-    public String recalculateHash() {
+    public String calculateHash() {
         return HashUtils.hash256(previousHash + (data != null ? data.toString() : "") + timeStamp);
     }
 }

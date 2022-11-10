@@ -1,4 +1,4 @@
-package ar.edu.unlam.actas.transactions;
+package ar.edu.unlam.actas.model.transactions;
 
 import ar.edu.unlam.actas.model.Hashable;
 import ar.edu.unlam.actas.utils.HashUtils;

@@ -1,6 +1,5 @@
 package ar.edu.unlam.actas.utils;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,27 +9,12 @@ import java.nio.charset.StandardCharsets;
 
 public class FileUtils {
 
-    private static final String BASE_PATH = "/blockChain";
-    private static String path;
+    public static void checkFileExists(String filename) {
+        File file = new File(filename);
 
-    public static void checkPath() throws UnsupportedEncodingException {
-        path = new JFileChooser().getFileSystemView().getDefaultDirectory().toString() + BASE_PATH;
-        path = URLDecoder.decode(path, StandardCharsets.UTF_8.toString());
-
-        File fi = new File(path);
-        if (!fi.exists()) {
-            fi.mkdir();
-        }
-    }
-
-    public static void checkFile(String filename) throws UnsupportedEncodingException {
-        checkPath();
-        String decodedPath = URLDecoder.decode(path + filename, StandardCharsets.UTF_8.toString());
-        File fi = new File(decodedPath);
-
-        if (!fi.exists()) {
+        if (!file.exists()) {
             try {
-                fi.createNewFile();
+                file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -38,10 +22,10 @@ public class FileUtils {
     }
 
     public static File getFile(String filename) throws UnsupportedEncodingException {
-        return new File(URLDecoder.decode(path + filename, StandardCharsets.UTF_8.toString()));
+        return new File(URLDecoder.decode(filename, StandardCharsets.UTF_8.toString()));
     }
 
     public static FileWriter getFileWriter(String filename) throws IOException {
-        return new FileWriter(URLDecoder.decode(path + filename, StandardCharsets.UTF_8.toString()));
+        return new FileWriter(URLDecoder.decode(filename, StandardCharsets.UTF_8.toString()));
     }
 }

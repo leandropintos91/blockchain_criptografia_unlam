@@ -3,7 +3,7 @@ package ar.edu.unlam.actas.utils;
 
 import ar.edu.unlam.actas.model.linearblockchain.Block;
 import ar.edu.unlam.actas.model.merkletree.MerkleBlock;
-import ar.edu.unlam.actas.transactions.HashableTransaction;
+import ar.edu.unlam.actas.model.transactions.HashableTransaction;
 import com.google.common.hash.Hashing;
 import org.springframework.stereotype.Component;
 
@@ -13,13 +13,15 @@ import java.util.List;
 @Component
 public class HashUtils {
 
+    public static final String GENESIS_HASH = "GenesisBlock";
+
     public static String hash256(String stringToHash) {
         return Hashing.sha256().hashString(stringToHash, StandardCharsets.UTF_8).toString();
     }
 
-    public <T> boolean isValidLinearChain(List<Block<T>> blockChain) {
-        Block<?> current;
-        Block<?> previous;
+    public boolean isValidLinearChain(List<Block> blockChain) {
+        Block current;
+        Block previous;
 
         for (int i = 1; i < blockChain.size(); i++) {
             current = blockChain.get(i);
@@ -28,7 +30,10 @@ public class HashUtils {
             String currentHash = current.getHash();
             String previosHash = previous.getHash();
 
-            if (!currentHash.equals(current.recalculateHash()))
+            if(!current.getPreviousHash().equals(previous.getHash()))
+                return false;
+
+            if (!currentHash.equals(current.calculateHash()))
                 return false;
 
             if (!previosHash.equals(current.getPreviousHash()))

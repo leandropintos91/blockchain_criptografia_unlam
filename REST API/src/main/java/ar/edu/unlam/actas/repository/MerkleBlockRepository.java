@@ -1,7 +1,7 @@
 package ar.edu.unlam.actas.repository;
 
 import ar.edu.unlam.actas.model.merkletree.MerkleBlock;
-import ar.edu.unlam.actas.transactions.HashableTransaction;
+import ar.edu.unlam.actas.model.transactions.HashableTransaction;
 import ar.edu.unlam.actas.utils.FileUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +28,7 @@ public class MerkleBlockRepository {
     }
 
     public static List<MerkleBlock<HashableTransaction>> getAll() throws IOException {
-        FileUtils.checkFile(FILENAME);
+        FileUtils.checkFileExists(FILENAME);
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<List<MerkleBlock<HashableTransaction>>> typeReference = new TypeReference<List<MerkleBlock<HashableTransaction>>>() {
         };
@@ -45,7 +45,7 @@ public class MerkleBlockRepository {
     }
 
     public static void save(List<MerkleBlock<HashableTransaction>> blockChain) throws IOException {
-        FileUtils.checkFile(FILENAME);
+        FileUtils.checkFileExists(FILENAME);
         ObjectMapper mapper = new ObjectMapper();
         BufferedWriter out;
 
@@ -55,7 +55,7 @@ public class MerkleBlockRepository {
     }
 
     public static List<HashableTransaction> getPendingTransactions() throws IOException {
-        FileUtils.checkFile(PENDING_TRANSACTIONS_FILENAME);
+        FileUtils.checkFileExists(PENDING_TRANSACTIONS_FILENAME);
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<List<HashableTransaction>> typeReference = new TypeReference<List<HashableTransaction>>() {
         };
@@ -72,7 +72,7 @@ public class MerkleBlockRepository {
     }
 
     public static void savePendingTransactions(List<HashableTransaction> pendingTransactions) throws IOException {
-        FileUtils.checkFile(PENDING_TRANSACTIONS_FILENAME);
+        FileUtils.checkFileExists(PENDING_TRANSACTIONS_FILENAME);
         ObjectMapper mapper = new ObjectMapper();
         BufferedWriter out;
 
@@ -82,8 +82,8 @@ public class MerkleBlockRepository {
     }
 
     public static void deleteAll() throws UnsupportedEncodingException {
-        FileUtils.checkFile(PENDING_TRANSACTIONS_FILENAME);
-        FileUtils.checkFile(FILENAME);
+        FileUtils.checkFileExists(PENDING_TRANSACTIONS_FILENAME);
+        FileUtils.checkFileExists(FILENAME);
         ObjectMapper mapper = new ObjectMapper();
         BufferedWriter out;
 

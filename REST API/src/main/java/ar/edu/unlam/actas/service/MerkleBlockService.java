@@ -1,11 +1,10 @@
 package ar.edu.unlam.actas.service;
 
-import ar.edu.unlam.actas.repository.BlockRepository;
-import ar.edu.unlam.actas.repository.MerkleBlockRepository;
-import ar.edu.unlam.actas.utils.HashUtils;
 import ar.edu.unlam.actas.model.merkletree.MerkleBlock;
 import ar.edu.unlam.actas.model.merkletree.MerkleTree;
-import ar.edu.unlam.actas.transactions.HashableTransaction;
+import ar.edu.unlam.actas.repository.MerkleBlockRepository;
+import ar.edu.unlam.actas.model.transactions.HashableTransaction;
+import ar.edu.unlam.actas.utils.HashUtils;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.springframework.stereotype.Service;
 
@@ -69,7 +68,7 @@ public class MerkleBlockService implements IMerkleBlockService {
                 MerkleBlock<?> lastBlock = merkleBlockChain.get(merkleBlockChain.size() - 1);
                 newBlock = new MerkleBlock<HashableTransaction>(lastBlock.getHash(), pendingTransactions);
             } else {
-                newBlock = new MerkleBlock<HashableTransaction>(BlockRepository.GENESIS_HASH, pendingTransactions);
+                newBlock = new MerkleBlock<HashableTransaction>(HashUtils.GENESIS_HASH, pendingTransactions);
                 merkleBlockChain = new ArrayList<>();
             }
 
