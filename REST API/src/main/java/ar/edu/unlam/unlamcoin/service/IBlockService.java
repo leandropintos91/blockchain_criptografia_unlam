@@ -1,6 +1,7 @@
 package ar.edu.unlam.unlamcoin.service;
 
 import ar.edu.unlam.unlamcoin.structure.Block;
+import ar.edu.unlam.unlamcoin.transactions.Transaction;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -8,11 +9,12 @@ import java.util.List;
 
 public interface IBlockService<T> {
 
-    List<Block<?>> getAll() throws IOException;
+    List<Block<T>> getAll() throws IOException;
 
-    Block<?> getByHash(String hash) throws UnsupportedEncodingException;
+    Block<T> getByHash(String hash) throws UnsupportedEncodingException;
 
-    boolean save(Block<T> block) throws IOException;
+
+    void saveNewBlock(T transaction) throws IOException;
 
     void deleteAll() throws IOException;
 }

@@ -23,4 +23,10 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         String errorMessage = ex.getMessage();
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(InvalidBlockchainException.class)
+    public ResponseEntity invalidBlockchainExceptionHandler(InvalidBlockchainException ex) {
+        String errorMessage = ex.getMessage();
+        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

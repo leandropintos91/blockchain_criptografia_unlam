@@ -4,13 +4,13 @@ import ar.edu.unlam.unlamcoin.service.IBlockService;
 import ar.edu.unlam.unlamcoin.structure.Block;
 import ar.edu.unlam.unlamcoin.transactions.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
+@SuppressWarnings("ALL")
 @RestController
 @RequestMapping("/blocks")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -20,28 +20,22 @@ public class BlockController {
     private IBlockService<Transaction> blockService;
 
     @GetMapping("{hash}")
-    public ResponseEntity get(@PathVariable("hash") String hash) throws UnsupportedEncodingException {
-        return new ResponseEntity(blockService.getByHash(hash), HttpStatus.OK);
+    public Block get(@PathVariable("hash") String hash) throws UnsupportedEncodingException {
+        return blockService.getByHash(hash);
     }
 
     @GetMapping
-    public ResponseEntity getAll() throws IOException {
-        return new ResponseEntity(blockService.getAll(), HttpStatus.OK);
+    public List<Block<Transaction>> getAll() throws IOException {
+        return blockService.getAll();
     }
 
     @PostMapping("/transaction")
-    public ResponseEntity save(@RequestBody Transaction t) throws IOException {
-        Block<Transaction> block = new Block<>();
-        block.setData(t);
-        if (blockService.save(block))
-            return new ResponseEntity<>(block, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public void save(@RequestBody Transaction transaction) throws IOException {
+        blockService.saveNewBlock(transaction);
     }
 
     @DeleteMapping
-    public ResponseEntity deleteAll() throws IOException {
+    public void deleteAll() throws IOException {
         blockService.deleteAll();
-        return ResponseEntity.ok(null);
     }
 }

@@ -1,50 +1,64 @@
 package ar.edu.unlam.unlamcoin.service;
 
+import ar.edu.unlam.unlamcoin.exception.InvalidBlockchainException;
 import ar.edu.unlam.unlamcoin.repository.BlockRepository;
 import ar.edu.unlam.unlamcoin.structure.Block;
 import ar.edu.unlam.unlamcoin.structure.Hasher;
+import ar.edu.unlam.unlamcoin.transactions.Transaction;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
 public class BlockService<T> implements IBlockService<T> {
 
-    @Override
-    public List<Block<?>> getAll() throws IOException {
-        return BlockRepository.getAll();
+    private final Hasher hasher;
+    private final BlockRepository<T> blockRepository;
+
+    public BlockService(final Hasher hasher, final BlockRepository<T> blockRepository) {
+        this.hasher = hasher;
+        this.blockRepository = blockRepository;
     }
 
     @Override
-    public Block<?> getByHash(String hash) throws UnsupportedEncodingException {
-        return BlockRepository.getByHash(hash);
+    public List<Block<T>> getAll() throws IOException {
+        List<Block<T>> blockchain = blockRepository.getAll();
+        if (CollectionUtils.isEmpty(blockchain)) {
+            blockchain.add(createGenesisBlock());
+            blockRepository.save(blockchain);
+        }
+        return blockchain;
+    }
+
+    private Block<T> createGenesisBlock() {
+        return (Block<T>) Block.builder().prevHash(BlockRepository.GENESIS_HASH).build();
     }
 
     @Override
-    public boolean save(Block<T> block) throws IOException {
-        List<Block<?>> blockChain = getAll();
+    public Block<T> getByHash(String hash) throws UnsupportedEncodingException {
+        return blockRepository.getByHash(hash);
+    }
 
-        if (blockChain.size() > 0) {
-            Block<?> lastBlock = blockChain.get(blockChain.size() - 1);
-            block.setPrevHash(lastBlock.getHash());
-        } else {
-            block.setPrevHash(BlockRepository.GENESIS_HASH);
-            blockChain = new ArrayList<>();
+    @Override
+    public void saveNewBlock(T transaction) throws IOException {
+        List<Block<T>> blockChain = getAll();
+        final String previousHash = blockChain.get(blockChain.size() - 1 ).getPrevHash();
+        final Block<T> block = (Block<T>) Block.builder().data(transaction).prevHash(previousHash).build();
+
+        if (hasher.isValidChain(blockChain)) {
+            throw new InvalidBlockchainException();
         }
 
-        if (Hasher.isValidChain(blockChain)) {
-            blockChain.add(block);
-            BlockRepository.save(blockChain);
-            return true;
-        } else
-            return false;
+        blockChain.add(block);
+        blockRepository.save(blockChain);
     }
 
     @Override
     public void deleteAll() throws IOException {
-        BlockRepository.deleteAll();
+        blockRepository.deleteAll();
     }
 }

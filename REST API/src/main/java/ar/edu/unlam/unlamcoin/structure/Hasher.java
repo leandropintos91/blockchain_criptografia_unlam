@@ -2,12 +2,14 @@ package ar.edu.unlam.unlamcoin.structure;
 
 
 import ar.edu.unlam.unlamcoin.transactions.HashableTransaction;
+import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+@Component
 public class Hasher {
     /**
      * Método para hacer un hash en SHA-256 de una cadena
@@ -39,7 +41,7 @@ public class Hasher {
      * @param blockChain: Cadena a validar
      * @return true en caso de válida y falso en caso de errónea
      */
-    public static boolean isValidChain(List<Block<?>> blockChain) {
+    public <T> boolean isValidChain(List<Block<T>> blockChain) {
         Block<?> current;
         Block<?> previous;
 

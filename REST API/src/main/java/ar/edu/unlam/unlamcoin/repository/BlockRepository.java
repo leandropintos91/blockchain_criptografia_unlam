@@ -4,19 +4,21 @@ import ar.edu.unlam.unlamcoin.structure.Block;
 import ar.edu.unlam.unlamcoin.utils.FileUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class BlockRepository<T> {
 
     private static final String FILENAME = "/blockChain.json";
-    public static final String GENESIS_HASH = "0";
+    public static final String GENESIS_HASH = "GenesisBlock";
 
-    public static Block<?> getByHash(String hash) throws UnsupportedEncodingException {
-        List<Block<?>> blocks = getAll();
-        for (Block<?> block : blocks) {
+    public Block<T> getByHash(String hash) throws UnsupportedEncodingException {
+        List<Block<T>> blocks = getAll();
+        for (Block<T> block : blocks) {
             if (block.getHash().equals(hash))
                 return block;
         }
@@ -24,24 +26,24 @@ public class BlockRepository<T> {
         return null;
     }
 
-    public static List<Block<?>> getAll() throws UnsupportedEncodingException {
+    public List<Block<T>> getAll() throws UnsupportedEncodingException {
         FileUtils.checkFile(FILENAME);
         ObjectMapper mapper = new ObjectMapper();
-        TypeReference<List<Block<?>>> typeReference = new TypeReference<List<Block<?>>>() {
+        TypeReference<List<Block<T>>> typeReference = new TypeReference<>() {
         };
-        List<Block<?>> b = new ArrayList<>();
+        List<Block<T>> blockList = new ArrayList<>();
         try {
             InputStream is = new FileInputStream(FileUtils.getFile(FILENAME));
-            b = mapper.readValue(is, typeReference);
+            blockList = mapper.readValue(is, typeReference);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
 
-        return b;
+        return blockList;
 
     }
 
-    public static void save(List<Block<?>> blockChain) throws UnsupportedEncodingException {
+    public void save(List<Block<T>> blockChain) throws UnsupportedEncodingException {
         FileUtils.checkFile(FILENAME);
         ObjectMapper mapper = new ObjectMapper();
         BufferedWriter out;
@@ -55,13 +57,13 @@ public class BlockRepository<T> {
         }
     }
 
-    public static void deleteAll() throws UnsupportedEncodingException {
+    public void deleteAll() throws UnsupportedEncodingException {
         FileUtils.checkFile(FILENAME);
         ObjectMapper mapper = new ObjectMapper();
         BufferedWriter out;
 
         try {
-            List<Block<?>> b = getAll();
+            List<Block<T>> b = getAll();
             b.clear();
             out = new BufferedWriter(FileUtils.getFileWriter(FILENAME));
             mapper.writeValue(out, b);
