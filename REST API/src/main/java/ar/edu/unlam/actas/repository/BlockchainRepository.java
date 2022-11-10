@@ -16,7 +16,7 @@ import java.util.List;
 @Component
 public class BlockchainRepository {
 
-    private static final String FILENAME = "D:\\Blockchain\\blockChain.json";
+    private static final String FILENAME = ".\\blockChain.json";
 
     public Block findByHash(String hash) throws IOException {
         List<Block> blocks = findAll();

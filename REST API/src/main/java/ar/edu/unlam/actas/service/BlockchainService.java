@@ -13,7 +13,7 @@ public interface BlockchainService {
     Block getBlockByHash(String hash) throws IOException;
 
 
-    void saveNewBlock(Acta transaction) throws IOException;
+    void saveNewBlock(List<Acta> transaction) throws IOException;
 
     void deleteBlockchain() throws IOException;
 }

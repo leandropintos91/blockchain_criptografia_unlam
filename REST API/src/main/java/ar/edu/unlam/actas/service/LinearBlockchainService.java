@@ -50,7 +50,7 @@ public class LinearBlockchainService implements BlockchainService {
     }
 
     @Override
-    public void saveNewBlock(Acta transaction) throws IOException {
+    public void saveNewBlock(List<Acta> transaction) throws IOException {
         List<Block> blockchain = getAllBlocks();
         final String previousHash = blockchain.get(blockchain.size() - 1).getHash();
         final Block newBlock = Block.builder().data(transaction).previousHash(previousHash).build();

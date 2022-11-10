@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -15,12 +16,12 @@ import java.util.Date;
 public class Block {
     private String previousHash;
     private long timeStamp;
-    private Acta data;
+    private List<Acta> data;
     private String hash;
 
 
     @Builder
-    public Block(final String previousHash, final Acta data) {
+    public Block(final String previousHash, final List<Acta> data) {
         this.previousHash = previousHash;
         this.data = data;
         Date today = new Date();

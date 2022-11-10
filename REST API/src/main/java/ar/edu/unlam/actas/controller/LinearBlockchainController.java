@@ -31,7 +31,7 @@ public class LinearBlockchainController {
     }
 
     @PostMapping("/transaction")
-    public void save(@RequestBody Acta acta) throws IOException {
+    public void save(@RequestBody List<Acta> acta) throws IOException {
         blockService.saveNewBlock(acta);
     }
 
