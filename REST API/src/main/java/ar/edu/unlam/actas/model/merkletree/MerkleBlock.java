@@ -1,45 +1,35 @@
 package ar.edu.unlam.actas.model.merkletree;
 
-import ar.edu.unlam.actas.model.Hashable;
+import ar.edu.unlam.actas.model.transactions.Acta;
+import ar.edu.unlam.actas.utils.HashUtils;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
-public class MerkleBlock<T extends Hashable> implements Hashable {
+@Setter
+@Getter
+@NoArgsConstructor
+public class MerkleBlock {
+    private String previousHash;
+    private long timeStamp;
+    private List<Acta> data;
+    private String hash;
 
-    private String prevHash;
-    private MerkleTree<T> merkleTree;
 
-    public MerkleBlock() {
+    @Builder
+    public MerkleBlock(final String previousHash, final List<Acta> data) {
+        this.previousHash = previousHash;
+        this.data = data;
+        Date today = new Date();
+        this.timeStamp = today.getTime();
+        this.hash = calculateHash();
     }
 
-    public MerkleBlock(String prevHash, List<T> data) {
-        this.prevHash = prevHash;
-        this.merkleTree = new MerkleTree<T>(data);
-    }
-
-    @Override
-    public String getHash() {
-        return merkleTree.getHash();
-    }
-
-    @Override
-    public String recalculateHash() {
-        return merkleTree.recalculateHash();
-    }
-
-    public void setPrevHash(final String prevHash) {
-        this.prevHash = prevHash;
-    }
-
-    public String getPrevHash() {
-        return prevHash;
-    }
-
-    public MerkleTree<T> getMerkleTree() {
-        return merkleTree;
-    }
-
-    public void setMerkleTree(MerkleTree<T> merkleTree) {
-        this.merkleTree = merkleTree;
+    public String calculateHash() {
+        return HashUtils.hash256(previousHash + (data != null ? data.toString() : "") + timeStamp);
     }
 }

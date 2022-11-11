@@ -13,30 +13,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MerkleBlockService implements IMerkleBlockService {
+public class MerkleBlockService  {
 
 
-    @Override
     public List<MerkleBlock<HashableTransaction>> getAll() throws IOException {
         return MerkleBlockRepository.getAll();
     }
 
-    @Override
     public MerkleBlock<HashableTransaction> getByHash(String hash) throws IOException {
         return MerkleBlockRepository.getBlock(hash);
     }
 
-    @Override
     public List<HashableTransaction> getPendingTransactions() throws IOException {
         return MerkleBlockRepository.getPendingTransactions();
     }
 
-    @Override
     public void save(MerkleBlock<HashableTransaction> block) throws IOException {
         //MerkleBlockRepository.save(block);
     }
 
-    @Override
     public boolean save(HashableTransaction transaction) throws IOException {
 
         //Calculamos el hash de la transacci�n
@@ -87,7 +82,6 @@ public class MerkleBlockService implements IMerkleBlockService {
         return true;
     }
 
-    @Override
     public void deleteAll() throws IOException {
         MerkleBlockRepository.deleteAll();
     }
