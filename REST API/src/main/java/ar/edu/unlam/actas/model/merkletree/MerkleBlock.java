@@ -2,6 +2,7 @@ package ar.edu.unlam.actas.model.merkletree;
 
 import ar.edu.unlam.actas.model.transactions.Acta;
 import ar.edu.unlam.actas.utils.HashUtils;
+import com.google.gson.GsonBuilder;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,22 +15,33 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class MerkleBlock {
+
     private String previousHash;
     private long timeStamp;
-    private List<Acta> data;
+    private IMerkleNode merkleTree;
     private String hash;
 
 
     @Builder
-    public MerkleBlock(final String previousHash, final List<Acta> data) {
+    public MerkleBlock(final String previousHash, final List<Acta> merkleTree) {
         this.previousHash = previousHash;
-        this.data = data;
+        if (merkleTree == null || merkleTree.size() == 0) {
+            this.merkleTree = null;
+        } else {
+            if (merkleTree.size() == 1) {
+                this.merkleTree = MerkleLeaf.builder().data(merkleTree.get(0)).build();
+            } else {
+                this.merkleTree = MerkleNode.builder().data(merkleTree).build();
+            }
+        }
+
+//        this.data = (data == null || data.size() == 0) ? null : MerkleNode.builder().data(data).build();
         Date today = new Date();
         this.timeStamp = today.getTime();
         this.hash = calculateHash();
     }
 
     public String calculateHash() {
-        return HashUtils.hash256(previousHash + (data != null ? data.toString() : "") + timeStamp);
+        return HashUtils.hash256(previousHash + (merkleTree != null ? new GsonBuilder().serializeNulls().create().toJson(merkleTree) : "") + timeStamp);
     }
 }

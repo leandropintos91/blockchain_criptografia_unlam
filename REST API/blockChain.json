@@ -1,0 +1,62 @@
+[
+  {
+    "previousHash": "GenesisBlock",
+    "timeStamp": 1668203181443,
+    "data": null,
+    "hash": "2e6dbd689c35b30a6d3fc9d275eec87b3a6ae72834b007cbe6762cd046258a89"
+  },
+  {
+    "previousHash": "2e6dbd689c35b30a6d3fc9d275eec87b3a6ae72834b007cbe6762cd046258a89",
+    "timeStamp": 1668203192063,
+    "data": [
+      {
+        "dniAlumno": "35901157",
+        "materia": "Algebra II",
+        "nota": 7
+      },
+      {
+        "dniAlumno": "11289003",
+        "materia": "Algebra I",
+        "nota": 8
+      },
+      {
+        "dniAlumno": "345556890",
+        "materia": "Física I",
+        "nota": 4
+      },
+      {
+        "dniAlumno": "35901157",
+        "materia": "Física II",
+        "nota": 7
+      }
+    ],
+    "hash": "bc6f347fa9126821d6bf96b588ec439f10ebe080255442b648b985815ef7ecd4"
+  },
+  {
+    "previousHash": "bc6f347fa9126821d6bf96b588ec439f10ebe080255442b648b985815ef7ecd4",
+    "timeStamp": 1668203232813,
+    "data": [
+      {
+        "dniAlumno": "35901157",
+        "materia": "TICs",
+        "nota": 7
+      },
+      {
+        "dniAlumno": "11289003",
+        "materia": "Algebra II",
+        "nota": 8
+      },
+      {
+        "dniAlumno": "345556890",
+        "materia": "Análisis de Software",
+        "nota": 4
+      },
+      {
+        "dniAlumno": "35901157",
+        "materia": "Criptografía",
+        "nota": 7
+      }
+    ],
+    "hash": "c2e1a0bd231c36e3378faba189d735aee99172533f62e8fe5964cb5e272b7ad3"
+  }
+]

@@ -1,11 +1,8 @@
 package ar.edu.unlam.actas.controller;
 
 import ar.edu.unlam.actas.model.merkletree.MerkleBlock;
-import ar.edu.unlam.actas.service.MerkleBlockService;
-import ar.edu.unlam.actas.model.transactions.HashableTransaction;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import ar.edu.unlam.actas.model.transactions.Acta;
+import ar.edu.unlam.actas.service.MerkleBlockchainService;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -16,42 +13,29 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class MerkleBlockController {
 
-    @Autowired
-    private MerkleBlockService merkleBlockService;
+    private final MerkleBlockchainService merkleBlockchainService;
 
-    @GetMapping("/{hash}")
-    public ResponseEntity getBlockByHash(@PathVariable String hash) throws IOException {
-        MerkleBlock<HashableTransaction> merkleBlock = merkleBlockService.getByHash(hash);
+    public MerkleBlockController(MerkleBlockchainService merkleBlockchainService) {
+        this.merkleBlockchainService = merkleBlockchainService;
+    }
 
-        return new ResponseEntity(merkleBlock, HttpStatus.OK);
+    @GetMapping("{hash}")
+    public MerkleBlock getBlockByHash(@PathVariable("hash") String hash) throws IOException {
+        return merkleBlockchainService.getBlockByHash(hash);
     }
 
     @GetMapping
-    public ResponseEntity getAll() throws IOException {
-        List<MerkleBlock<HashableTransaction>> merkleBlockChain = merkleBlockService.getAll();
-
-        return new ResponseEntity(merkleBlockChain, HttpStatus.OK);
-    }
-
-    @GetMapping("/transaction")
-    public ResponseEntity getPendingTransactions() throws IOException {
-        List<HashableTransaction> merkleBlock = merkleBlockService.getPendingTransactions();
-
-        return new ResponseEntity(merkleBlock, HttpStatus.OK);
+    public List<MerkleBlock> getAllBlocks() throws IOException {
+        return merkleBlockchainService.getAllBlocks();
     }
 
     @PostMapping("/transaction")
-    public ResponseEntity createTransaction(@RequestBody HashableTransaction transaction) throws IOException {
-
-        if (merkleBlockService.save(transaction))
-            return new ResponseEntity(merkleBlockService.getPendingTransactions(), HttpStatus.OK);
-        else
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    public void saveNewTransaction(@RequestBody List<Acta> acta) throws IOException {
+        merkleBlockchainService.saveNewBlock(acta);
     }
 
     @DeleteMapping
-    public ResponseEntity deleteAll() throws IOException {
-        merkleBlockService.deleteAll();
-        return ResponseEntity.ok(null);
+    public void deleteBlockchain() throws IOException {
+        merkleBlockchainService.deleteBlockchain();
     }
 }

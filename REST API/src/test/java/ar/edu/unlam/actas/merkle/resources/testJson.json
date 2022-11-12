@@ -1,0 +1,53 @@
+{
+  "previousHash": "previousHash",
+  "timeStamp": 123456789,
+  "data": {
+    "type": "node",
+    "firstNode": {
+      "type": "node",
+      "firstNode": {
+        "type": "leaf",
+        "data": {
+          "dniAlumno": "dniAlumno",
+          "materia": "materia",
+          "nota": 10
+        },
+        "hash": "hash"
+      },
+      "secondNode": {
+        "type": "leaf",
+        "data": {
+          "dniAlumno": "dniAlumno",
+          "materia": "materia",
+          "nota": 10
+        },
+        "hash": "hash"
+      },
+      "hash": "hash"
+    },
+    "secondNode": {
+      "type": "node",
+      "firstNode": {
+        "type": "leaf",
+        "data": {
+          "dniAlumno": "dniAlumno",
+          "materia": "materia",
+          "nota": 10
+        },
+        "hash": "hash"
+      },
+      "secondNode": {
+        "type": "leaf",
+        "data": {
+          "dniAlumno": "dniAlumno",
+          "materia": "materia",
+          "nota": 10
+        },
+        "hash": "hash"
+      },
+      "hash": "hash"
+    },
+    "hash": "hash"
+  },
+  "hash": "hash"
+}
