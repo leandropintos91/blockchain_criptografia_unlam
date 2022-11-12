@@ -1,8 +1,8 @@
-#Actas UNLaM
+# Actas UNLaM
 
-##Proyecto de Blockchain para Criptografía
+## Proyecto de Blockchain para Criptografía
 
-###Backend
+### Backend
 
 Para compilar el backend:
 1. ./mvnw clean install
