@@ -3,8 +3,8 @@ package ar.edu.unlam.actas.service;
 import ar.edu.unlam.actas.exception.BlockNotFoundException;
 import ar.edu.unlam.actas.exception.InvalidBlockchainException;
 import ar.edu.unlam.actas.model.linearblockchain.Block;
-import ar.edu.unlam.actas.repository.BlockchainRepository;
 import ar.edu.unlam.actas.model.transactions.Acta;
+import ar.edu.unlam.actas.repository.BlockchainRepository;
 import ar.edu.unlam.actas.utils.HashUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -30,7 +30,7 @@ public class LinearBlockchainService implements BlockchainService {
             blockchain.add(createGenesisBlock());
             blockchainRepository.save(blockchain);
         }
-        if(!hashUtils.isValidLinearChain(blockchain)) {
+        if (!hashUtils.isValidLinearChain(blockchain)) {
             throw new InvalidBlockchainException();
         }
         return blockchain;

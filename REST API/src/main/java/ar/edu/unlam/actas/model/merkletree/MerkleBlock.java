@@ -34,8 +34,6 @@ public class MerkleBlock {
                 this.merkleTree = MerkleNode.builder().data(merkleTree).build();
             }
         }
-
-//        this.data = (data == null || data.size() == 0) ? null : MerkleNode.builder().data(data).build();
         Date today = new Date();
         this.timeStamp = today.getTime();
         this.hash = calculateHash();

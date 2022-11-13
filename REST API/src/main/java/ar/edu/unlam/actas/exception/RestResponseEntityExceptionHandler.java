@@ -13,7 +13,7 @@ import java.io.UnsupportedEncodingException;
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(IOException.class)
-    public ResponseEntity ioExcetionHandler(IOException ex) {
+    public ResponseEntity ioExceptionHandler(IOException ex) {
         String errorMessage = ex.getMessage();
         return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
     }

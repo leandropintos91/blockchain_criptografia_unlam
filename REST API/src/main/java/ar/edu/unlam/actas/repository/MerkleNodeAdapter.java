@@ -13,8 +13,6 @@ public class MerkleNodeAdapter implements JsonDeserializer<IMerkleNode> {
     @Override
     public IMerkleNode deserialize(JsonElement jsonElement, Type typeOfJson, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         final JsonObject object = jsonElement.getAsJsonObject();
-//        object.keySet().stream().anyMatch(key -> key.equals("firstNode"));
-//        final String type = object.get("type").getAsString();
         final Gson gson = new GsonBuilder().registerTypeAdapter(IMerkleNode.class, new MerkleNodeAdapter()).create();
         if (object.keySet().stream().anyMatch(key -> key.equals("firstNode"))) {
             MerkleNode merkleNode = new MerkleNode();

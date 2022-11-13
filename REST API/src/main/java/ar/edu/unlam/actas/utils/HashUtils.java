@@ -53,12 +53,9 @@ public class HashUtils {
             String currHash = current.getHash();
             String previousHash = previous.getHash();
 
-            //Primero nos fijamos que el hash del bloque actual sea válido volviendo a hashearlo
             if (!currHash.equals(current.calculateHash()))
                 return false;
 
-            //Luego nos fijamos que el hash del bloque anterior sea válido comparándolo con
-            //el hash anterior que tiene el bloque actual
             if (!previousHash.equals(current.getPreviousHash()))
                 return false;
         }

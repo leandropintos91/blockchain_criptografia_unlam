@@ -1,8 +1,8 @@
 package ar.edu.unlam.actas.controller;
 
 import ar.edu.unlam.actas.model.linearblockchain.Block;
-import ar.edu.unlam.actas.service.BlockchainService;
 import ar.edu.unlam.actas.model.transactions.Acta;
+import ar.edu.unlam.actas.service.BlockchainService;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

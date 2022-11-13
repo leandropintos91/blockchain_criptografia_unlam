@@ -7,11 +7,9 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IMerkleBlockchainService {
-
     List<MerkleBlock> getAllBlocks() throws IOException;
 
     MerkleBlock getBlockByHash(String hash) throws IOException;
-
 
     void saveNewBlock(List<Acta> transaction) throws IOException;
 
