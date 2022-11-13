@@ -1,0 +1,126 @@
+[
+  {
+    "previousHash": "GenesisBlock",
+    "timeStamp": 1668299030660,
+    "merkleTree": null,
+    "hash": "aee0ab77f3d9df661c5f1d48b3bfbc8ff1a7d392c025c1d22bd13fb7afaf73e5"
+  },
+  {
+    "previousHash": "aee0ab77f3d9df661c5f1d48b3bfbc8ff1a7d392c025c1d22bd13fb7afaf73e5",
+    "timeStamp": 1668299033908,
+    "merkleTree": {
+      "data": {
+        "dniAlumno": "3591197",
+        "materia": "TICs",
+        "nota": 6
+      },
+      "hash": "c04cb26cae191a5c1ad440633f515ae428241d3b8fa4bceaf17880f7b69b4c59"
+    },
+    "hash": "8ef040231b93cf7d7bfb02d01da39f43b9f6b55ad69ad0227ec8ee27d20ad406"
+  },
+  {
+    "previousHash": "8ef040231b93cf7d7bfb02d01da39f43b9f6b55ad69ad0227ec8ee27d20ad406",
+    "timeStamp": 1668299042923,
+    "merkleTree": {
+      "firstNode": {
+        "data": {
+          "dniAlumno": "3591197",
+          "materia": "TICs",
+          "nota": 6
+        },
+        "hash": "c04cb26cae191a5c1ad440633f515ae428241d3b8fa4bceaf17880f7b69b4c59"
+      },
+      "secondNode": {
+        "data": {
+          "dniAlumno": "3591197",
+          "materia": "TICs",
+          "nota": 6
+        },
+        "hash": "c04cb26cae191a5c1ad440633f515ae428241d3b8fa4bceaf17880f7b69b4c59"
+      },
+      "hash": "037ae310551aa6816ad7277204370c18805a3160a6133c49ba8777e83ab66a35"
+    },
+    "hash": "0b4432c682459dff53987bd3a473ca45e7599faf4ef0a36fd64703a18f27dc50"
+  },
+  {
+    "previousHash": "0b4432c682459dff53987bd3a473ca45e7599faf4ef0a36fd64703a18f27dc50",
+    "timeStamp": 1668299051363,
+    "merkleTree": {
+      "firstNode": {
+        "firstNode": {
+          "data": {
+            "dniAlumno": "3591197",
+            "materia": "TICs",
+            "nota": 6
+          },
+          "hash": "c04cb26cae191a5c1ad440633f515ae428241d3b8fa4bceaf17880f7b69b4c59"
+        },
+        "secondNode": {
+          "data": {
+            "dniAlumno": "3591197",
+            "materia": "TICs",
+            "nota": 6
+          },
+          "hash": "c04cb26cae191a5c1ad440633f515ae428241d3b8fa4bceaf17880f7b69b4c59"
+        },
+        "hash": "037ae310551aa6816ad7277204370c18805a3160a6133c49ba8777e83ab66a35"
+      },
+      "secondNode": {
+        "data": {
+          "dniAlumno": "3591197",
+          "materia": "TICs",
+          "nota": 6
+        },
+        "hash": "c04cb26cae191a5c1ad440633f515ae428241d3b8fa4bceaf17880f7b69b4c59"
+      },
+      "hash": "9e8faffb8d5151da18365dec6466724ef58493c181edce688c8ec3fbfe246436"
+    },
+    "hash": "f3042645251eb6716c0becdfaf08e6c5282ee71f92a5fadc35f2a4dcf6b92505"
+  },
+  {
+    "previousHash": "f3042645251eb6716c0becdfaf08e6c5282ee71f92a5fadc35f2a4dcf6b92505",
+    "timeStamp": 1668299063029,
+    "merkleTree": {
+      "firstNode": {
+        "firstNode": {
+          "data": {
+            "dniAlumno": "3591197",
+            "materia": "TICs",
+            "nota": 6
+          },
+          "hash": "c04cb26cae191a5c1ad440633f515ae428241d3b8fa4bceaf17880f7b69b4c59"
+        },
+        "secondNode": {
+          "data": {
+            "dniAlumno": "3591197",
+            "materia": "TICs",
+            "nota": 6
+          },
+          "hash": "c04cb26cae191a5c1ad440633f515ae428241d3b8fa4bceaf17880f7b69b4c59"
+        },
+        "hash": "037ae310551aa6816ad7277204370c18805a3160a6133c49ba8777e83ab66a35"
+      },
+      "secondNode": {
+        "firstNode": {
+          "data": {
+            "dniAlumno": "3591197",
+            "materia": "TICs",
+            "nota": 6
+          },
+          "hash": "c04cb26cae191a5c1ad440633f515ae428241d3b8fa4bceaf17880f7b69b4c59"
+        },
+        "secondNode": {
+          "data": {
+            "dniAlumno": "3591197",
+            "materia": "TICs",
+            "nota": 6
+          },
+          "hash": "c04cb26cae191a5c1ad440633f515ae428241d3b8fa4bceaf17880f7b69b4c59"
+        },
+        "hash": "037ae310551aa6816ad7277204370c18805a3160a6133c49ba8777e83ab66a35"
+      },
+      "hash": "235cb2fa361a12b3359f2674a6cf3150dafa330405621fc805f10f4ae7960155"
+    },
+    "hash": "55d935b4725badf28330063c1be6e751194cffbaafb55d608d2fc45e9844d354"
+  }
+]

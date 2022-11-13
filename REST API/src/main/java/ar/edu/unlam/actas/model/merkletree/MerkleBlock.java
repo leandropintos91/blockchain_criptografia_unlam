@@ -1,45 +1,47 @@
 package ar.edu.unlam.actas.model.merkletree;
 
-import ar.edu.unlam.actas.model.Hashable;
+import ar.edu.unlam.actas.model.transactions.Acta;
+import ar.edu.unlam.actas.utils.HashUtils;
+import com.google.gson.GsonBuilder;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
-public class MerkleBlock<T extends Hashable> implements Hashable {
+@Setter
+@Getter
+@NoArgsConstructor
+public class MerkleBlock {
 
-    private String prevHash;
-    private MerkleTree<T> merkleTree;
+    private String previousHash;
+    private long timeStamp;
+    private IMerkleNode merkleTree;
+    private String hash;
 
-    public MerkleBlock() {
+
+    @Builder
+    public MerkleBlock(final String previousHash, final List<Acta> merkleTree) {
+        this.previousHash = previousHash;
+        if (merkleTree == null || merkleTree.size() == 0) {
+            this.merkleTree = null;
+        } else {
+            if (merkleTree.size() == 1) {
+                this.merkleTree = MerkleLeaf.builder().data(merkleTree.get(0)).build();
+            } else {
+                this.merkleTree = MerkleNode.builder().data(merkleTree).build();
+            }
+        }
+
+//        this.data = (data == null || data.size() == 0) ? null : MerkleNode.builder().data(data).build();
+        Date today = new Date();
+        this.timeStamp = today.getTime();
+        this.hash = calculateHash();
     }
 
-    public MerkleBlock(String prevHash, List<T> data) {
-        this.prevHash = prevHash;
-        this.merkleTree = new MerkleTree<T>(data);
-    }
-
-    @Override
-    public String getHash() {
-        return merkleTree.getHash();
-    }
-
-    @Override
-    public String recalculateHash() {
-        return merkleTree.recalculateHash();
-    }
-
-    public void setPrevHash(final String prevHash) {
-        this.prevHash = prevHash;
-    }
-
-    public String getPrevHash() {
-        return prevHash;
-    }
-
-    public MerkleTree<T> getMerkleTree() {
-        return merkleTree;
-    }
-
-    public void setMerkleTree(MerkleTree<T> merkleTree) {
-        this.merkleTree = merkleTree;
+    public String calculateHash() {
+        return HashUtils.hash256(previousHash + (merkleTree != null ? new GsonBuilder().serializeNulls().create().toJson(merkleTree) : "") + timeStamp);
     }
 }

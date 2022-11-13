@@ -1,0 +1,55 @@
+[
+  {
+    "previousHash": "previousHash",
+    "timeStamp": 123456789,
+    "merkleTree": {
+      "type": "node",
+      "firstNode": {
+        "type": "node",
+        "firstNode": {
+          "type": "leaf",
+          "data": {
+            "dniAlumno": "dniAlumno1",
+            "materia": "materia1",
+            "nota": 1
+          },
+          "hash": "hash"
+        },
+        "secondNode": {
+          "type": "leaf",
+          "data": {
+            "dniAlumno": "dniAlumno2",
+            "materia": "materia2",
+            "nota": 2
+          },
+          "hash": "hash"
+        },
+        "hash": "hash"
+      },
+      "secondNode": {
+        "type": "node",
+        "firstNode": {
+          "type": "leaf",
+          "data": {
+            "dniAlumno": "dniAlumno3",
+            "materia": "materia3",
+            "nota": 3
+          },
+          "hash": "hash"
+        },
+        "secondNode": {
+          "type": "leaf",
+          "data": {
+            "dniAlumno": "dniAlumno4",
+            "materia": "materia4",
+            "nota": 4
+          },
+          "hash": "hash"
+        },
+        "hash": "hash"
+      },
+      "hash": "hash"
+    },
+    "hash": "hash"
+  }
+]
