@@ -10,4 +10,6 @@ public interface IMerkleNode {
     String getHash();
 
     List<Acta> getDataBlock();
+
+    boolean hasValidHash();
 }

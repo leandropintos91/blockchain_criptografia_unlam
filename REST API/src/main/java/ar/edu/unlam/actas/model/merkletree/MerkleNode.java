@@ -52,6 +52,19 @@ public class MerkleNode implements IMerkleNode {
         return list;
     }
 
+    @Override
+    public boolean hasValidHash() {
+        if (this.firstNode != null && !this.firstNode.hasValidHash()) {
+            return false;
+        }
+
+        if (this.secondNode != null && !this.secondNode.hasValidHash()) {
+            return false;
+        }
+
+        return this.hash.equals(calculateHash());
+    }
+
     private static List<List<Acta>> split(List<Acta> list) {
         int size = list.size();
         if (size == 1) {

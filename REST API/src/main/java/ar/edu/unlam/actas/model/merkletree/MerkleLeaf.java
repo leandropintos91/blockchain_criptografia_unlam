@@ -35,6 +35,11 @@ public class MerkleLeaf implements IMerkleNode {
     }
 
     @Override
+    public boolean hasValidHash() {
+        return this.hash.equals(calculateHash());
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof MerkleLeaf)) {
             return false;

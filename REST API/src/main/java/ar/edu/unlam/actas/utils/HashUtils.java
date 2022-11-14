@@ -22,6 +22,11 @@ public class HashUtils {
         Block current;
         Block previous;
 
+        if (blockChain.size() == 1) {
+            current = blockChain.get(0);
+            return current.getHash().equals(current.calculateHash());
+        }
+
         for (int i = 1; i < blockChain.size(); i++) {
             current = blockChain.get(i);
             previous = blockChain.get(i - 1);
@@ -46,17 +51,22 @@ public class HashUtils {
         MerkleBlock current;
         MerkleBlock previous;
 
+        if (blockChain.size() == 1) {
+            current = blockChain.get(0);
+            return current.hasValidHash();
+        }
+
         for (int i = 1; i < blockChain.size(); i++) {
             current = blockChain.get(i);
             previous = blockChain.get(i - 1);
 
-            String currHash = current.getHash();
-            String previousHash = previous.getHash();
-
-            if (!currHash.equals(current.calculateHash()))
+            if (!current.getPreviousHash().equals(previous.getHash()))
                 return false;
 
-            if (!previousHash.equals(current.getPreviousHash()))
+            if (!current.hasValidHash())
+                return false;
+
+            if (!previous.hasValidHash())
                 return false;
         }
         return true;
