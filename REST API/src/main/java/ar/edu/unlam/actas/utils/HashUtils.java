@@ -35,7 +35,7 @@ public class HashUtils {
             if (!currentHash.equals(current.calculateHash()))
                 return false;
 
-            if (!previosHash.equals(current.getPreviousHash()))
+            if (!previosHash.equals(previous.calculateHash()))
                 return false;
         }
 
