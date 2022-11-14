@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ar.edu.unlam</groupId>
-    <artifactId>unlamcoin</artifactId>
+    <artifactId>unlamactas</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>unlamcoin</name>
+    <name>unlamactas</name>
     <description>UNLaM Coin Project</description>
     <properties>
         <java.version>11</java.version>
